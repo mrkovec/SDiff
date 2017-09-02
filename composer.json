@@ -1,6 +1,7 @@
 {
     "name": "mrkovec/sdiff",
     "description": "Simple and stupid text diff",
+    "version": "0.1",
     "require": {
         "php": "^7.0"
     }
