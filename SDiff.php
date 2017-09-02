@@ -1,6 +1,6 @@
 <?php
 
-namespace app\helper;
+namespace SDiff;
 
 // Stupid text diff
 class SDiff {
