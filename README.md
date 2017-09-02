@@ -1,2 +1,2 @@
 # SDiff
-Simple and stupid text diff
+Simple and stupid text diff.
