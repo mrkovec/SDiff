@@ -9,7 +9,7 @@
     },
     "autoload": {
         "psr-4": {
-            "mrkovec\\sdiff\\": "."
+            "mrkovec\\sdiff\\": "src/"
         }
     }
 }
