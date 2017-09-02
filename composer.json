@@ -1,7 +1,6 @@
 {
     "name": "mrkovec/sdiff",
     "description": "Simple and stupid text diff",
-    "version": "0.1",
     "license": "MIT",
     "minimum-stability": "dev",	
     "require": {
