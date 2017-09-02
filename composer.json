@@ -1,5 +1,5 @@
 {
-    "name": "mrkovec/SDiff",
+    "name": "mrkovec/sdiff",
     "description": "Simple and stupid text diff",
     "require": {
         "php": "^7.0"
