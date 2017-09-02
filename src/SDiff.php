@@ -1,6 +1,6 @@
 <?php
 
-namespace SDiff;
+namespace mrkovec\sdiff;
 
 // Stupid text diff
 class SDiff {
