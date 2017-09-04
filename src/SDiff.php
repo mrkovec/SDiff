@@ -12,7 +12,8 @@ class SDiff {
     ksort($b);
     $a = json_encode($a, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
     $b = json_encode($b, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-    $diff = self::getClauseDiff($a, $b, $retEqual);
+
+    $diff = self::getDiff($a, $b, [["separator" => "\n", "retEqual" => $retEqual]]);
     if($diff["eq"] === 1) return null;
     return $diff["diff"];
   }
@@ -126,7 +127,7 @@ class SDiff {
         break;
       }
 
-      if(/*$diff["eq"] >= 0.5 &&*/ $diff["eq"] > $maxEq) {
+      if($diff["eq"] >= 0.75 && $diff["eq"] > $maxEq) {
         $maxEq = $diff["eq"];
         $maxEqJ = $j;
         $maxEqDiff = $diff["diff"];
