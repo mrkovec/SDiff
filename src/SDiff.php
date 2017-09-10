@@ -10,12 +10,12 @@ class SDiff {
   {
     ksort($a);
     ksort($b);
-    $a = json_encode($a, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
-    $b = json_encode($b, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+    $a = str_replace(["\"","null",","],[""],json_encode($a, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
+    $b = str_replace(["\"","null",","],[""],json_encode($b, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
 
-    $diff = self::getDiff($a, $b, [["separator" => "\n", "retEqual" => $retEqual]]);
+    $diff = self::getDiff($a, $b, [["separator" => "\n", "retEqual" => $retEqual],["separator" => " "],["separator" => ""]]);
     if($diff["eq"] === 1) return null;
-    return $diff["diff"];
+    return str_replace(["<del></del>","<ins></ins>"],[""],$diff["diff"]);
   }
 
   public static function getClauseDiff($a, $b, $retEqual = True)
@@ -84,6 +84,7 @@ class SDiff {
       } else {
         $o = self::searchEqual($text1[0], $text2, $params);
       }
+      // echo "    o: ".json_encode($o)."<br>";
 
       if($o["i"] === False) {
         $res[] = "<del>".$text1[0]."</del>";
@@ -107,6 +108,7 @@ class SDiff {
 
 
   private static function searchEqual($val, $array, $params) {
+    // echo "searchEqual($val, ".json_encode($array)."<br>";
       $i = array_search($val, $array);
       $val = $array[$i];
       if ($i === False) $val="x";
@@ -114,11 +116,13 @@ class SDiff {
   }
 
   private static function searchSimilar($val, $array, $params) {
+    // echo "searchSimilar($val, ".json_encode($array)."<br>";
     $maxEq = -1;
     $maxEqJ = -1;
     $maxEqDiff = [];
     for($j = 0; $j < count($array); $j++) {
       $diff = self::getDiff($val, $array[$j], $params);
+
 
       if($diff["eq"] === 1) {
         $maxEq = 1;
@@ -126,8 +130,8 @@ class SDiff {
         $maxEqDiff = $diff["diff"];
         break;
       }
-
-      if($diff["eq"] >= 0.75 && $diff["eq"] > $maxEq) {
+      $diff["eq"] = $diff["eq"] / ($j+1);
+      if($diff["eq"] >= 0.3 && $diff["eq"] > $maxEq) {
         $maxEq = $diff["eq"];
         $maxEqJ = $j;
         $maxEqDiff = $diff["diff"];
