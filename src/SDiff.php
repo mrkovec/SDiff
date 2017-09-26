@@ -131,7 +131,7 @@ class SDiff {
         break;
       }
       $diff["eq"] = $diff["eq"] / ($j+1);
-      if($diff["eq"] >= 0.3 && $diff["eq"] > $maxEq) {
+      if($diff["eq"] >= 0.25 && $diff["eq"] > $maxEq) {
         $maxEq = $diff["eq"];
         $maxEqJ = $j;
         $maxEqDiff = $diff["diff"];
