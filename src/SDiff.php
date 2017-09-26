@@ -5,15 +5,15 @@ namespace mrkovec\sdiff;
 // Stupid text diff
 class SDiff {
 
-  // compute diff for arbytrary object
+  // compute diff for arbitrary object
   public static function getObjectDiff($a, $b, $retEqual = True)
   {
     ksort($a);
     ksort($b);
-    $a = str_replace(["\"","null",","],[""],json_encode($a, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
-    $b = str_replace(["\"","null",","],[""],json_encode($b, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
+    $a = str_replace(["\"","null"],[""],json_encode($a, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
+    $b = str_replace(["\"","null"],[""],json_encode($b, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
 
-    $diff = self::getDiff($a, $b, [["separator" => "\n", "retEqual" => $retEqual],["separator" => " "],["separator" => ""]]);
+    $diff = self::getDiff($a, $b, [["separator" => "\n", "retEqual" => $retEqual],["separator" => ","], ["separator" => " "],["separator" => ""]]);
     if($diff["eq"] === 1) return null;
     return str_replace(["<del></del>","<ins></ins>"],[""],$diff["diff"]);
   }
